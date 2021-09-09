@@ -1,10 +1,11 @@
-n, m = list(map(int, input().split()))
-now_x, now_y, now_dir = list(map(int, input().split()))
+import sys
+n, m = list(map(int, sys.stdin.readline().rstrip().split()))
+now_x, now_y, now_dir = list(map(int, sys.stdin.readline().rstrip().split()))
 if now_dir % 2 == 1:
     now_dir = (now_dir + 2) % 4
 room = []
 for _ in range(n):
-    room.append(list(map(int, input().split())))
+    room.append(list(map(int, sys.stdin.readline().rstrip().split())))
 
 x_direction = [-1, 0, 1, 0]
 y_direction = [0, -1, 0, 1]
