@@ -17,9 +17,6 @@ else:
     room[now_x][now_y] = 2
 
     while 1:
-        for p in room:
-            print(p)
-        print("\n")
         count = 0
         for _ in range(4):
             temp_dir = (now_dir + 1) % 4
