@@ -21,7 +21,7 @@ else:
             print(p)
         print("\n")
         count = 0
-        for i in range(4):
+        for _ in range(4):
             temp_dir = (now_dir + 1) % 4
             next_x = now_x + x_direction[temp_dir]
             next_y = now_y + y_direction[temp_dir]
