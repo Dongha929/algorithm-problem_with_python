@@ -13,7 +13,7 @@ def move(x, y, d, save):
     ny = y + dy[d]
     if B[nx][ny] == 0:
       B[x][y], B[nx][ny] = B[nx][ny], B[x][y]
-    elif B[nx][ny] == B[x][y] and [nx, ny] not in save:
+    elif B[nx][ny] == B[x][y] and [nx, ny] not in save and [x, y] not in save:
       B[x][y], B[nx][ny] = 0, B[x][y] + B[nx][ny]
       save.append([nx, ny])
 
