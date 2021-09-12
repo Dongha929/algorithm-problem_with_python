@@ -1,35 +1,54 @@
+from collections import deque
+
+n, m = list(map(int, input().split()))
+board = [list(input().rstrip()) for _ in range(n)]
+
+irx, iry, ibx, iby = -1, -1, -1, -1
+for i in range(n):
+  for j in range(m):
+    if board[i][j] == 'R':
+      irx, iry = i, j
+    elif board[i][j] == 'B':
+      ibx, iby = i, j
+
+dir_x = [-1, 1, 0, 0]
+dir_y = [0, 0, -1, 1]
+
+def move(x, y, dx, dy):
+  step = 0
+  while board[x + dx][y + dy] != '#' and board[x][y] != 'O':
+    x += dx
+    y += dy
+    step += 1
+  return x, y, step
+
+visited = [[[[False] * m for _ in range(n)] for _ in range(m)] for _ in range(n)]
+
 # q = [[red], [blue], iteration]
-pos = [-1, 1, -1, 1]
-result = -1
-def BFS():
+def BFS(q):
   while q:
     now_red, now_blue, count = q.popleft()
+    if count > 10:
+      break
     for i in range(4):
-      temp_red, temp_blue = cal_pos(now_red, now_blue, i)
-      if temp_blue != [-1, -1]:
-        if temp_red != [-1, -1]:
-          q.append([temp_red, temp_blue, count + 1])
-        else:
-          result = count + 1
-          break
+      rx, ry, rstep = move(now_red[0], now_red[1], dir_x[i], dir_y[i]) 
+      bx, by, bstep = move(now_blue[0], now_blue[1], dir_x[i], dir_y[i]) 
+      if board[bx][by] != 'O':
+        if board[rx][ry] == 'O':
+          return print(count)
+        if rx == bx and ry == by:
+          if rstep > bstep:
+            rx -= dir_x[i]
+            ry -= dir_y[i]
+          else:
+            bx -= dir_x[i]
+            by -= dir_y[i]
+        if not visited[rx][ry][bx][by]:
+          visited[rx][ry][bx][by] = True
+          q.append(([rx, ry], [bx, by], count + 1))
+  print(-1)
 
-def return_ball_xpos(x_ball, y_ball, dir):
-  for _ in range(n):
-    temp_x = x_ball + pos[dir]
-    if board[temp_x][y_ball] == '#':
-      return [x_ball, y_ball]
-    elif board[temp_x][y_ball] == 'O':
-      return [-1, -1]
-    else:
-      x_ball = temp_x
-
-# dir에 따라 b1의 위치를 계산해주는 함수 
-def cal_pos(b1, b2, dir):
-  x_b1, y_b1 = b1
-  x_b2, y_b2 = b2
-  if dir == 0 or dir == 1:
-    if y_b1 != y_b2:
-      return [return_ball_xpos(x_b1, y_b1, dir), return_ball_xpos(x_b2, y_b2, dir)]
-    
-
-  
+visited[irx][iry][ibx][iby] = True
+q = deque([])
+q.append(([irx, iry], [ibx, iby], 1))
+BFS(q)
