@@ -21,11 +21,11 @@ def cal_result():
       return False
   return True
 
-def DFS(d):
+def DFS(s, d):
   global ans
   if ans <= d or d == 3:
     return
-  for h in range(1, H+1):
+  for h in range(s, H+1):
     for n in range(1, N):
       if not board[h][n] and not board[h][n+1] and not board[h][n-1]:
         h, n = case
@@ -35,11 +35,11 @@ def DFS(d):
           board[h][n] = False
           return
         else:
-          DFS(d+1)
+          DFS(h, d+1)
           board[h][n] = False
 
 if cal_result():
   ans = 0
 else:
-  DFS(0)
+  DFS(1, 0)
 print(ans if ans != 1e9 else -1)
