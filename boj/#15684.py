@@ -7,7 +7,7 @@ for _ in range(M):
   h, n = map(int, input().split())
   board[h][n] = True
 ans = 1e9
-
+# O(NH)
 def cal_result():
   for n in range(1, N+1):
     tmp = n
@@ -20,7 +20,7 @@ def cal_result():
     if tmp != n:
       return False
   return True
-
+# O(NH) 여길 개선해야할듯
 def cal_cases():
   res = []
   for h in range(1, H+1):
