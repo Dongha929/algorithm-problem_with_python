@@ -38,8 +38,13 @@ def DFS(s, d):
           DFS(h, d+1)
           board[h][n] = False
 
-if cal_result():
+if M == 0:
   ans = 0
+elif M == 1:
+  ans = 1
 else:
-  DFS(1, 0)
+  if cal_result():
+    ans = 0
+  else:
+    DFS(1, 0)
 print(ans if ans != 1e9 else -1)
